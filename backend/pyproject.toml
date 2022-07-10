@@ -10,11 +10,16 @@ fastapi = "^0.78.0"
 dependency-injector = "^4.39.1"
 uvicorn = "^0.18.2"
 python-dotenv = "^0.20.0"
+SQLAlchemy = "^1.4.39"
+sqlalchemy-stubs = "^0.4"
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.961"
 black = "^22.6.0"
 isort = "^5.10.1"
+
+[tool.mypy]
+plugins = ["sqlmypy"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
