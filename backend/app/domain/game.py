@@ -2,10 +2,10 @@ from pydantic import BaseModel
 from uuid import UUID
 
 
-class GameSchema(BaseModel):
-    """Game's schema."""
+class Game(BaseModel):
+    """Game."""
 
-    id: UUID
+    uuid: UUID
     players_max_count: int
     members: list[int]
     pack: str
