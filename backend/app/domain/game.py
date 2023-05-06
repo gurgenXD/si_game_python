@@ -14,11 +14,11 @@ class Game(BaseModel):
 
     uuid: UUID
     capacity: int
-    package: "Package"
     is_active: bool
     is_paused: bool
     is_finished: bool
-
     presenter: "User"
+    package: "Package"
+
     players: list["Player"]
     viewers: list["User"]
