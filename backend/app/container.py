@@ -10,9 +10,7 @@ class Container(DeclarativeContainer):
 
     pyproject_data: Singleton["PyProjectData"] = Singleton(PyProjectData)
 
-    app_settings: Singleton["AppSettings"] = Singleton(
-        AppSettings, pyproject_data.provided
-    )
+    app_settings: Singleton["AppSettings"] = Singleton(AppSettings, pyproject_data.provided)
     db_settings: Singleton["DatabaseSettings"] = Singleton(DatabaseSettings)
     server_settings: Singleton["ServerSettings"] = Singleton(ServerSettings)
 

@@ -1,4 +1,5 @@
-import tomli
+import tomllib
+
 from pydantic import BaseModel
 
 from utils.constants import BASE_DIR
@@ -25,7 +26,7 @@ class PyProjectData(BaseModel):
     """Data from pyproject.toml."""
 
     def __init__(self) -> None:
-        super().__init__(**tomli.load(_PYPROJECT_PATH.open(mode="rb")))
+        super().__init__(**tomllib.load(_PYPROJECT_PATH.open(mode="rb")))
 
     tool: ToolsData
 

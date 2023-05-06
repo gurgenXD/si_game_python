@@ -1,9 +1,6 @@
-from typing import TYPE_CHECKING
-
 from pydantic import BaseModel
 
-if TYPE_CHECKING:
-    from app.domain.topic import Topic
+from app.domain.topic import Topic
 
 
 class Round(BaseModel):
@@ -11,4 +8,4 @@ class Round(BaseModel):
 
     order: int
 
-    topics: list["Topic"]
+    topics: list[Topic]

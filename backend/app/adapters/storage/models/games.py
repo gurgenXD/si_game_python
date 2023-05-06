@@ -15,9 +15,5 @@ class GameModel(BaseModel):
     is_paused: Mapped[bool]
     is_finished: Mapped[bool]
 
-    presenter_uuid: Mapped[str] = mapped_column(
-        sa.String(36), sa.ForeignKey("users.uuid")
-    )
-    package_uuid: Mapped[str] = mapped_column(
-        sa.String(36), sa.ForeignKey("packages.uuid")
-    )
+    presenter_uuid: Mapped[str] = mapped_column(sa.String(36), sa.ForeignKey("users.uuid"))
+    package_uuid: Mapped[str] = mapped_column(sa.String(36), sa.ForeignKey("packages.uuid"))
