@@ -1,7 +1,10 @@
+from uuid import UUID
+
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.adapters.storage.database import BaseModel
+from app.domain.game import GameStatus
 
 
 class GameModel(BaseModel):
@@ -9,11 +12,10 @@ class GameModel(BaseModel):
 
     __tablename__ = "games"
 
-    uuid: Mapped[str] = mapped_column(sa.String(36), primary_key=True)
+    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True)
     capacity: Mapped[int]
-    is_active: Mapped[bool]
-    is_paused: Mapped[bool]
-    is_finished: Mapped[bool]
+    status: Mapped[GameStatus] = mapped_column(sa.Enum(GameStatus))
+    is_deleted: Mapped[bool]
 
-    presenter_uuid: Mapped[str] = mapped_column(sa.String(36), sa.ForeignKey("users.uuid"))
-    package_uuid: Mapped[str] = mapped_column(sa.String(36), sa.ForeignKey("packages.uuid"))
+    presenter_uuid: Mapped[UUID] = mapped_column(sa.Uuid, sa.ForeignKey("users.uuid"))
+    package_uuid: Mapped[UUID] = mapped_column(sa.Uuid, sa.ForeignKey("packages.uuid"))

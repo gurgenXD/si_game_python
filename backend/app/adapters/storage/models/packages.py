@@ -1,3 +1,5 @@
+from uuid import UUID
+
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -9,4 +11,4 @@ class PackageModel(BaseModel):
 
     __tablename__ = "packages"
 
-    uuid: Mapped[str] = mapped_column(sa.String(36), primary_key=True)
+    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True)
