@@ -1,7 +1,6 @@
-from fastapi import APIRouter
-from app.domain.game import Game
-from uuid import uuid4, UUID
+from uuid import UUID, uuid4
 
+from fastapi import APIRouter
 
 router = APIRouter(prefix="/users", tags=["USERS"])
 

@@ -11,7 +11,6 @@ if TYPE_CHECKING:
 
 @dataclass
 class GameAdapter(GameStorageInterface):
-
     _session_factory = Callable[[], AbstractAsyncContextManager["AsyncSession"]]
 
     _game_model = GameModel

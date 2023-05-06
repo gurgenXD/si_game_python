@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from app.container import CONTAINER
 from app.api.v1 import factory as v1_factory
+from app.container import CONTAINER
 
 
 def create_app():

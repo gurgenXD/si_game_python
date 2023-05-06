@@ -1,11 +1,11 @@
 from pydantic import BaseModel
 
 
-class QuestionSchema(BaseModel):
-    """Question's schema."""
+class Question(BaseModel):
+    """Question."""
 
     text: str
     answer: str
     cost: int
-    type:
+    type: str
     file_path: str
