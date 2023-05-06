@@ -1,5 +1,6 @@
 import click
 
+from cli.migrations import migrations
 from cli.start import start
 
 
@@ -9,6 +10,7 @@ def main() -> None:
 
 
 main.add_command(start)
+main.add_command(migrations)
 
 
 main()

@@ -18,16 +18,18 @@ class DatabaseSettings(BaseSettings):
     schema_: str
 
     # Database url schema.
-    url_schema: str
+    url_schema: str = "postgresql"
     # Async driver for connection to database.
-    async_driver: str
+    async_driver: str = "asyncpg"
 
     # Min size of database connections.
-    min_pool_size: int
+    pool_size: int = 1
     # Max size of database connections.
-    max_pool_size: int
+    max_overflow: int = 5
     # Database connections lifetime in seconds after usage.
-    connection_timeout_seconds: int
+    pool_timeout: int = 5
+    # Log engine messages.
+    echo: bool = False
 
     class Config:
         env_prefix = "database_"

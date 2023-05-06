@@ -7,11 +7,11 @@ from app.container import CONTAINER
 def create_app():
     """Create FastAPI application."""
 
-    settings = CONTAINER.app_settings()
+    settings = CONTAINER.api_settings()
 
-    app = FastAPI(title=settings.title, version=settings.version, docs_url=None, redoc_url=None)
+    app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
 
-    api_v1 = v1_factory.create_app(settings.title, settings.version)
+    api_v1 = v1_factory.create_app(settings.title, settings.version_v1)
     app.mount("/api/v1", api_v1)
 
     return app
