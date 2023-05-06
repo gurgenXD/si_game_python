@@ -1,2 +1,2 @@
 api:
-	python manage.py start api
+	python -m cli start api

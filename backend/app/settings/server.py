@@ -10,8 +10,8 @@ class ServerSettings(BaseSettings):
     factory: bool = True
     # Worker processes count.
     workers: int = 1
-    # Development mode.
-    debug: bool = False
+    # Reload server.
+    reload: bool = False
     # Logging level.
     log_level: str = "info"
     # Event loop.
