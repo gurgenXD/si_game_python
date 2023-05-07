@@ -20,8 +20,17 @@ async def create_game(game: GameCreateSchema) -> None:
 
 
 @router.get("", summary="Get games")
-async def get_games() -> list[Game]:
+async def get_games(
+    status: GameStatus | None = None,
+    presenter_uuid: UUID | None = None,
+    package_uuid: UUID | None = None,
+) -> list[Game]:
     """Get games."""
+    service = CONTAINER.game_service()
+    games = await service.get_all(
+        status=status, presenter_uuid=presenter_uuid, package_uuid=package_uuid
+    )
+
     return [
         Game(
             uuid=uuid4(),
@@ -39,6 +48,9 @@ async def get_games() -> list[Game]:
 @router.get("/{uuid}", summary="Get game by UUID")
 async def get_game_by_uuid(uuid: UUID) -> Game:
     """Get game by UUID."""
+    service = CONTAINER.game_service()
+    game = await service.get(uuid=uuid)
+
     return Game(
         uuid=uuid,
         capacity=3,

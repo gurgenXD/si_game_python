@@ -2,7 +2,7 @@ from contextlib import AbstractAsyncContextManager
 from typing import TYPE_CHECKING, Callable
 from uuid import UUID
 
-from sqlalchemy import exc
+from sqlalchemy import exc, select
 
 from app.adapters.storage.models import GameModel
 from app.domain.game import GameStatus
@@ -46,3 +46,37 @@ class GameAdapter:
                 await session.commit()
             except exc.IntegrityError as ex:
                 raise NotFoundError("Object not found.") from ex
+
+    async def get_all(
+        self, status: GameStatus | None, presenter_uuid: UUID | None, package_uuid: UUID | None
+    ) -> list[dict]:
+        """Get games."""
+        query = select(GameModel)
+
+        if status:
+            query = query.where(GameModel.status == status)
+
+        if presenter_uuid:
+            query = query.where(GameModel.presenter_uuid == presenter_uuid)
+
+        if package_uuid:
+            query = query.where(GameModel.package_uuid == package_uuid)
+
+        async with self._session_factory() as session:
+            games = (await session.execute(query)).all()
+
+            print(games)
+
+            await session.commit()
+
+    async def get(self, uuid: UUID) -> dict:
+        """Get game."""
+        query = select(GameModel).where(GameModel.uuid == uuid)
+
+        async with self._session_factory() as session:
+            game = (await session.execute(query)).first()
+
+            if not game:
+                raise NotFoundError("Object not found.")
+
+            await session.commit()
