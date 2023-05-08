@@ -29,6 +29,10 @@ line-length = 100
 target-version = ["py311"]
 skip-magic-trailing-comma = true
 
+[tool.isort]
+profile = "black"
+line_length = 100
+
 [tool.mypy]
 disallow_untyped_calls = true
 disallow_untyped_defs = true
