@@ -3,9 +3,19 @@ from typing import TYPE_CHECKING, Callable
 from uuid import UUID
 
 from sqlalchemy import exc, select
+from sqlalchemy.orm import contains_eager, joinedload
 
-from app.adapters.storage.models import GameModel
+from app.adapters.storage.models import (
+    GameModel,
+    PackageModel,
+    PlayerModel,
+    QuestionModel,
+    RoundModel,
+    TopicModel,
+    UserModel,
+)
 from app.services.exceptions import NotFoundError
+from app.services.schemas.game import GameSchema
 from app.services.types.game_status import GameStatusType
 
 if TYPE_CHECKING:
@@ -71,10 +81,28 @@ class GameAdapter:
 
     async def get(self, uuid: UUID) -> dict:
         """Get game."""
-        query = select(GameModel).where(GameModel.uuid == uuid)
-
+        query = (
+            select(GameModel)
+            .where(GameModel.uuid == uuid)
+            .options(
+                joinedload(GameModel.presenter),
+                (
+                    joinedload(GameModel.package)
+                    .joinedload(PackageModel.rounds)
+                    .joinedload(RoundModel.topics)
+                    .joinedload(TopicModel.questions)
+                ),
+            )
+        )
+        print()
+        print(query)
+        print()
         async with self._session_factory() as session:
-            game = (await session.execute(query)).first()
+            game = (await session.execute(query)).unique().all()
+            print(game)
+            # print(game.presenter)
+            # print(game.package)
+            # print(game.rounds)
 
             if not game:
                 raise NotFoundError("Object not found.")

@@ -1,10 +1,15 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 from uuid import UUID
 
 import sqlalchemy as sa
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.adapters.storage.database.base_model import BaseModel
+
+if TYPE_CHECKING:
+    from app.adapters.storage.models.games import GameModel
+    from app.adapters.storage.models.rounds import RoundModel
 
 
 class PackageModel(BaseModel):
@@ -21,3 +26,8 @@ class PackageModel(BaseModel):
     created_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True))
 
     author_uuid: Mapped[UUID] = mapped_column(sa.Uuid, sa.ForeignKey("users.uuid"))
+
+    games: Mapped["GameModel"] = relationship("GameModel", back_populates="package", uselist=True)
+    rounds: Mapped["RoundModel"] = relationship(
+        "RoundModel", back_populates="package", uselist=True
+    )
