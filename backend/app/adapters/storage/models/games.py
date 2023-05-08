@@ -18,7 +18,7 @@ class GameModel(BaseModel):
 
     __tablename__ = "games"
 
-    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True)
+    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True, index=True)
     capacity: Mapped[int]
     status: Mapped[GameStatusType] = mapped_column(sa.Enum(GameStatusType))
     is_deleted: Mapped[bool]

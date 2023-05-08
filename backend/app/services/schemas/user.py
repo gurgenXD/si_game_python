@@ -11,3 +11,6 @@ class UserSchema(BaseModel):
     password_hash: str
     email: EmailStr
     file_path: str | None
+
+    class Config:
+        orm_mode = True

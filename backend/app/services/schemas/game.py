@@ -26,5 +26,8 @@ class GameSchema(BaseModel):
     package: PackageSchema
     is_deleted: bool
 
-    players: list[PlayerSchema]
-    viewers: list[UserSchema]
+    players: list[PlayerSchema] = []
+    viewers: list[UserSchema] = []
+
+    class Config:
+        orm_mode = True

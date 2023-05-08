@@ -16,12 +16,10 @@ class TopicModel(BaseModel):
 
     __tablename__ = "topics"
 
-    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True)
+    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True, index=True)
     title: Mapped[str] = mapped_column(sa.String(64))
 
     round_uuid: Mapped[UUID] = mapped_column(sa.Uuid, sa.ForeignKey("rounds.uuid"))
 
     round: Mapped["RoundModel"] = relationship("RoundModel", back_populates="topics")
-    questions: Mapped["QuestionModel"] = relationship(
-        "QuestionModel", back_populates="topic", uselist=True
-    )
+    questions: Mapped[list["QuestionModel"]] = relationship("QuestionModel", back_populates="topic")

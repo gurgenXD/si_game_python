@@ -16,11 +16,11 @@ class RoundModel(BaseModel):
 
     __tablename__ = "rounds"
 
-    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True)
+    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True, index=True)
     order: Mapped[int]
     type: Mapped[str] = mapped_column(sa.String(16))
 
     package_uuid: Mapped[UUID] = mapped_column(sa.Uuid, sa.ForeignKey("packages.uuid"))
 
     package: Mapped["PackageModel"] = relationship("PackageModel", back_populates="rounds")
-    topics: Mapped["TopicModel"] = relationship("TopicModel", back_populates="round", uselist=True)
+    topics: Mapped[list["TopicModel"]] = relationship("TopicModel", back_populates="round")

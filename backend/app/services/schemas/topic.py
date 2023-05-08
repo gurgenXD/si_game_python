@@ -8,3 +8,6 @@ class TopicSchema(BaseModel):
 
     title: str
     questions: list[QuestionSchema]
+
+    class Config:
+        orm_mode = True

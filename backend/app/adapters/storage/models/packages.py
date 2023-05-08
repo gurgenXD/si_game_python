@@ -10,6 +10,7 @@ from app.adapters.storage.database.base_model import BaseModel
 if TYPE_CHECKING:
     from app.adapters.storage.models.games import GameModel
     from app.adapters.storage.models.rounds import RoundModel
+    from app.adapters.storage.models.users import UserModel
 
 
 class PackageModel(BaseModel):
@@ -17,7 +18,7 @@ class PackageModel(BaseModel):
 
     __tablename__ = "packages"
 
-    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True)
+    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True, index=True)
     title: Mapped[str] = mapped_column(sa.String(64))
     difficult: Mapped[int]
     rating: Mapped[int]
@@ -27,7 +28,6 @@ class PackageModel(BaseModel):
 
     author_uuid: Mapped[UUID] = mapped_column(sa.Uuid, sa.ForeignKey("users.uuid"))
 
-    games: Mapped["GameModel"] = relationship("GameModel", back_populates="package", uselist=True)
-    rounds: Mapped["RoundModel"] = relationship(
-        "RoundModel", back_populates="package", uselist=True
-    )
+    games: Mapped[list["GameModel"]] = relationship("GameModel", back_populates="package")
+    rounds: Mapped[list["RoundModel"]] = relationship("RoundModel", back_populates="package")
+    author: Mapped["UserModel"] = relationship("UserModel", back_populates="packages")

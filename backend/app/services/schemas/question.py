@@ -9,3 +9,6 @@ class QuestionSchema(BaseModel):
     cost: int
     type: str
     file_path: str | None
+
+    class Config:
+        orm_mode = True

@@ -9,6 +9,7 @@ from app.adapters.storage.database.base_model import BaseModel
 
 if TYPE_CHECKING:
     from app.adapters.storage.models.games import GameModel
+    from app.adapters.storage.models.packages import PackageModel
 
 
 class UserModel(BaseModel):
@@ -16,7 +17,7 @@ class UserModel(BaseModel):
 
     __tablename__ = "users"
 
-    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True)
+    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True, index=True)
     nickname: Mapped[str] = mapped_column(sa.String(32))
     password_hash: Mapped[str] = mapped_column(sa.String(128))
     email: Mapped[str] = mapped_column(sa.String(128))
@@ -25,4 +26,5 @@ class UserModel(BaseModel):
     created_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True))
     updated_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True))
 
-    games: Mapped["GameModel"] = relationship("GameModel", back_populates="presenter", uselist=True)
+    games: Mapped[list["GameModel"]] = relationship("GameModel", back_populates="presenter")
+    packages: Mapped[list["PackageModel"]] = relationship("PackageModel", back_populates="author")

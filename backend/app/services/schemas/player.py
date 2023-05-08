@@ -8,3 +8,6 @@ class PlayerSchema(BaseModel):
 
     user: UserSchema
     score: int
+
+    class Config:
+        orm_mode = True

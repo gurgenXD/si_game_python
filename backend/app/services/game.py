@@ -35,4 +35,4 @@ class GameService:
 
     async def get(self, uuid: UUID) -> "GameSchema":
         """Get game."""
-        await self._games.get(uuid=uuid)
+        return await self._games.get(uuid=uuid)

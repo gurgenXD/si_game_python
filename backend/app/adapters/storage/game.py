@@ -3,17 +3,9 @@ from typing import TYPE_CHECKING, Callable
 from uuid import UUID
 
 from sqlalchemy import exc, select
-from sqlalchemy.orm import contains_eager, joinedload
+from sqlalchemy.orm import joinedload
 
-from app.adapters.storage.models import (
-    GameModel,
-    PackageModel,
-    PlayerModel,
-    QuestionModel,
-    RoundModel,
-    TopicModel,
-    UserModel,
-)
+from app.adapters.storage.models import GameModel, PackageModel, RoundModel, TopicModel
 from app.services.exceptions import NotFoundError
 from app.services.schemas.game import GameSchema
 from app.services.types.game_status import GameStatusType
@@ -79,7 +71,7 @@ class GameAdapter:
 
             await session.commit()
 
-    async def get(self, uuid: UUID) -> dict:
+    async def get(self, uuid: UUID) -> "GameSchema":
         """Get game."""
         query = (
             select(GameModel)
@@ -92,19 +84,18 @@ class GameAdapter:
                     .joinedload(RoundModel.topics)
                     .joinedload(TopicModel.questions)
                 ),
+                joinedload(GameModel.package).joinedload(PackageModel.author),
             )
         )
-        print()
-        print(query)
-        print()
-        async with self._session_factory() as session:
-            game = (await session.execute(query)).unique().all()
-            print(game)
-            # print(game.presenter)
-            # print(game.package)
-            # print(game.rounds)
 
-            if not game:
+        async with self._session_factory() as session:
+            game_model = (await session.execute(query)).unique().scalar()
+
+            if not game_model:
                 raise NotFoundError("Object not found.")
 
+            game = GameSchema.from_orm(game_model)
+
             await session.commit()
+
+        return game

@@ -49,15 +49,4 @@ async def get_games(
 async def get_game_by_uuid(uuid: UUID) -> GameSchema:
     """Get game by UUID."""
     service = CONTAINER.game_service()
-    game = await service.get(uuid=uuid)
-
-    return GameSchema(
-        uuid=uuid,
-        capacity=3,
-        status=GameStatusType.FINISHED,
-        is_deleted=False,
-        package=MagicMock(PackageSchema),
-        presenter=MagicMock(UserSchema),
-        players=[],
-        viewers=[],
-    )
+    return await service.get(uuid=uuid)

@@ -16,3 +16,6 @@ class PackageSchema(BaseModel):
     rating: int
 
     rounds: list[RoundSchema]
+
+    class Config:
+        orm_mode = True
