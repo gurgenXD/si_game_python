@@ -8,4 +8,4 @@ class QuestionSchema(BaseModel):
     answer: str
     cost: int
     type: str
-    file_path: str
+    file_path: str | None

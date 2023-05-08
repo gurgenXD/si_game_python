@@ -4,7 +4,7 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy.engine import Connection
 
-from app.adapters.storage.database import BaseModel
+from app.adapters.storage.database.base_model import BaseModel
 from app.adapters.storage.models import *  # noqa: F403
 from app.container import CONTAINER
 

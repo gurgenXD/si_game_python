@@ -7,5 +7,6 @@ class RoundSchema(BaseModel):
     """Round schema."""
 
     order: int
+    type: str
 
     topics: list[TopicSchema]

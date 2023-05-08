@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 class UserSchema(BaseModel):
@@ -9,5 +9,5 @@ class UserSchema(BaseModel):
     uuid: UUID
     nickname: str
     password_hash: str
-    email: str
-    avatar: str | None
+    email: EmailStr
+    file_path: str | None
