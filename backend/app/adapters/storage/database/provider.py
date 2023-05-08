@@ -3,12 +3,9 @@ from typing import Callable
 
 from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
-from sqlalchemy.ext.declarative import declarative_base
-
-BaseModel = declarative_base()
 
 
-class Database:
+class DatabaseProvider:
     """Database provider."""
 
     def __init__(

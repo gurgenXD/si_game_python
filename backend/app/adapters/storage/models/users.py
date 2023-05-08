@@ -3,7 +3,7 @@ from uuid import UUID
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.adapters.storage.database import BaseModel
+from app.adapters.storage.database.base_model import BaseModel
 
 
 class UserModel(BaseModel):
