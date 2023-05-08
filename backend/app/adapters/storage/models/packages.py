@@ -22,7 +22,6 @@ class PackageModel(BaseModel):
     difficult: Mapped[int]
     rating: Mapped[int]
     counter: Mapped[int]
-
     created_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True))
 
     author_uuid: Mapped[UUID] = mapped_column(sa.Uuid, sa.ForeignKey("users.uuid"))

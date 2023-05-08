@@ -21,7 +21,6 @@ class GameModel(BaseModel):
     capacity: Mapped[int]
     status: Mapped[GameStatusType] = mapped_column(sa.Enum(GameStatusType))
     is_deleted: Mapped[bool]
-
     created_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True))
     started_at: Mapped[datetime | None] = mapped_column(sa.DateTime(timezone=True))
     finished_at: Mapped[datetime | None] = mapped_column(sa.DateTime(timezone=True))

@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 
 class GameService:
-    """Game Service."""
+    """Game service."""
 
     def __init__(self, games: "GameAdapter") -> None:
         self._games = games

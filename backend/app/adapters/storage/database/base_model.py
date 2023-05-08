@@ -1,7 +1,8 @@
+from uuid import UUID
+
 import sqlalchemy as sa
 from sqlalchemy.ext.declarative import as_declarative
 from sqlalchemy.orm import Mapped, mapped_column
-from uuid import UUID
 
 
 @as_declarative()

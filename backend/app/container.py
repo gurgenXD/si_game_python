@@ -3,7 +3,10 @@ from dependency_injector.providers import Singleton
 
 from app.adapters.storage.database.provider import DatabaseProvider
 from app.adapters.storage.game import GameAdapter
+from app.adapters.storage.models import packages
+from app.adapters.storage.package import PackageAdapter
 from app.services.game import GameService
+from app.services.package import PackageService
 from app.settings import APISettings, DatabaseSettings, ServerSettings
 
 
@@ -25,8 +28,10 @@ class Container(DeclarativeContainer):
     )
 
     game_adapter = Singleton(GameAdapter, session_factory=db.provided.session)
+    package_adapter = Singleton(PackageAdapter, session_factory=db.provided.session)
 
     game_service = Singleton(GameService, games=game_adapter.provided)
+    package_service = Singleton(PackageService, packages=package_adapter.provided)
 
 
 CONTAINER = Container()

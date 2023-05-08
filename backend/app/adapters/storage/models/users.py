@@ -20,7 +20,6 @@ class UserModel(BaseModel):
     password_hash: Mapped[str] = mapped_column(sa.String(128))
     email: Mapped[str] = mapped_column(sa.String(128))
     file_path: Mapped[str | None] = mapped_column(sa.String(128))
-
     created_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True))
     updated_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True))
 
