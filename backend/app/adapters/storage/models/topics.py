@@ -16,7 +16,6 @@ class TopicModel(BaseModel):
 
     __tablename__ = "topics"
 
-    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True, index=True)
     title: Mapped[str] = mapped_column(sa.String(64))
 
     round_uuid: Mapped[UUID] = mapped_column(sa.Uuid, sa.ForeignKey("rounds.uuid"))

@@ -16,7 +16,6 @@ class RoundModel(BaseModel):
 
     __tablename__ = "rounds"
 
-    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True, index=True)
     order: Mapped[int]
     type: Mapped[str] = mapped_column(sa.String(16))
 

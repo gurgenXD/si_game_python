@@ -18,7 +18,6 @@ class PackageModel(BaseModel):
 
     __tablename__ = "packages"
 
-    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True, index=True)
     title: Mapped[str] = mapped_column(sa.String(64))
     difficult: Mapped[int]
     rating: Mapped[int]

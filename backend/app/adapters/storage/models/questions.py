@@ -15,7 +15,6 @@ class QuestionModel(BaseModel):
 
     __tablename__ = "questions"
 
-    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True, index=True)
     text: Mapped[str] = mapped_column(sa.String(1024))
     answer: Mapped[str] = mapped_column(sa.String(128))
     cost: Mapped[int]

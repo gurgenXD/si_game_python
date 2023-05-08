@@ -1,6 +1,5 @@
 from datetime import datetime
 from typing import TYPE_CHECKING
-from uuid import UUID
 
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -17,7 +16,6 @@ class UserModel(BaseModel):
 
     __tablename__ = "users"
 
-    uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True, index=True)
     nickname: Mapped[str] = mapped_column(sa.String(32))
     password_hash: Mapped[str] = mapped_column(sa.String(128))
     email: Mapped[str] = mapped_column(sa.String(128))

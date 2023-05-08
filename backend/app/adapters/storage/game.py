@@ -84,7 +84,6 @@ class GameAdapter:
                     .joinedload(RoundModel.topics)
                     .joinedload(TopicModel.questions)
                 ),
-                joinedload(GameModel.package).joinedload(PackageModel.author),
             )
         )
 
