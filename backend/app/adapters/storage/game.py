@@ -5,8 +5,8 @@ from uuid import UUID
 from sqlalchemy import exc, select
 
 from app.adapters.storage.models import GameModel
-from app.domain.game import GameStatus
 from app.services.exceptions import NotFoundError
+from app.services.types.game_status import GameStatusType
 
 if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession
@@ -26,7 +26,7 @@ class GameAdapter:
         presenter_uuid: UUID,
         package_uuid: UUID,
         capacity: int,
-        status: GameStatus,
+        status: GameStatusType,
         is_deleted: bool,
     ) -> None:
         """Create new game."""
@@ -48,7 +48,7 @@ class GameAdapter:
                 raise NotFoundError("Object not found.") from ex
 
     async def get_all(
-        self, status: GameStatus | None, presenter_uuid: UUID | None, package_uuid: UUID | None
+        self, status: GameStatusType | None, presenter_uuid: UUID | None, package_uuid: UUID | None
     ) -> list[dict]:
         """Get games."""
         query = select(GameModel)

@@ -3,8 +3,8 @@ from uuid import UUID
 from pydantic import BaseModel
 
 
-class User(BaseModel):
-    """User."""
+class UserSchema(BaseModel):
+    """User schema."""
 
     uuid: UUID
     nickname: str

@@ -4,10 +4,10 @@ from uuid import UUID, uuid4
 from fastapi import APIRouter
 
 from app.container import CONTAINER
-from app.domain.game import Game, GameStatus
-from app.domain.package import Package
-from app.domain.user import User
-from app.services.schemas.game import GameCreateSchema
+from app.services.schemas.game import GameCreateSchema, GameSchema
+from app.services.schemas.package import PackageSchema
+from app.services.schemas.user import UserSchema
+from app.services.types.game_status import GameStatusType
 
 router = APIRouter(prefix="/games", tags=["GAMES"])
 
@@ -21,10 +21,10 @@ async def create_game(game: GameCreateSchema) -> None:
 
 @router.get("", summary="Get games")
 async def get_games(
-    status: GameStatus | None = None,
+    status: GameStatusType | None = None,
     presenter_uuid: UUID | None = None,
     package_uuid: UUID | None = None,
-) -> list[Game]:
+) -> list[GameSchema]:
     """Get games."""
     service = CONTAINER.game_service()
     games = await service.get_all(
@@ -32,13 +32,13 @@ async def get_games(
     )
 
     return [
-        Game(
+        GameSchema(
             uuid=uuid4(),
             capacity=3,
-            status=GameStatus.FINISHED,
+            status=GameStatusType.FINISHED,
             is_deleted=False,
-            package=MagicMock(Package),
-            presenter=MagicMock(User),
+            package=MagicMock(PackageSchema),
+            presenter=MagicMock(UserSchema),
             players=[],
             viewers=[],
         )
@@ -46,18 +46,18 @@ async def get_games(
 
 
 @router.get("/{uuid}", summary="Get game by UUID")
-async def get_game_by_uuid(uuid: UUID) -> Game:
+async def get_game_by_uuid(uuid: UUID) -> GameSchema:
     """Get game by UUID."""
     service = CONTAINER.game_service()
     game = await service.get(uuid=uuid)
 
-    return Game(
+    return GameSchema(
         uuid=uuid,
         capacity=3,
-        status=GameStatus.FINISHED,
+        status=GameStatusType.FINISHED,
         is_deleted=False,
-        package=MagicMock(Package),
-        presenter=MagicMock(User),
+        package=MagicMock(PackageSchema),
+        presenter=MagicMock(UserSchema),
         players=[],
         viewers=[],
     )

@@ -4,7 +4,7 @@ import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.adapters.storage.database import BaseModel
-from app.domain.game import GameStatus
+from app.services.types.game_status import GameStatusType
 
 
 class GameModel(BaseModel):
@@ -14,7 +14,7 @@ class GameModel(BaseModel):
 
     uuid: Mapped[UUID] = mapped_column(sa.Uuid, primary_key=True)
     capacity: Mapped[int]
-    status: Mapped[GameStatus] = mapped_column(sa.Enum(GameStatus))
+    status: Mapped[GameStatusType] = mapped_column(sa.Enum(GameStatusType))
     is_deleted: Mapped[bool]
 
     presenter_uuid: Mapped[UUID] = mapped_column(sa.Uuid, sa.ForeignKey("users.uuid"))
