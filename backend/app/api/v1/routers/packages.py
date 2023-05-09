@@ -24,6 +24,8 @@ async def get_package_by_uuid(uuid: UUID) -> PackageSchema:
 
 
 @router.get("", summary="Get packags")
-async def get_packages(uuid: UUID) -> list[PackageSchema]:  # noqa: ARG001
+async def get_packages(
+    rating: int | None = None, difficult: int | None = None  # noqa: ARG001
+) -> list[PackageSchema]:
     """Get packages."""
     return []
