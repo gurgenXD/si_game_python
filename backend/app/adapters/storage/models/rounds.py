@@ -6,6 +6,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.adapters.storage.database.base_model import BaseModel
 
+
 if TYPE_CHECKING:
     from app.adapters.storage.models.packages import PackageModel
     from app.adapters.storage.models.topics import TopicModel
@@ -17,7 +18,7 @@ class RoundModel(BaseModel):
     __tablename__ = "rounds"
 
     order: Mapped[int]
-    type: Mapped[str] = mapped_column(sa.String(16))
+    type_: Mapped[str] = mapped_column(sa.String(16))
 
     package_uuid: Mapped[UUID] = mapped_column(sa.Uuid, sa.ForeignKey("packages.uuid"))
 

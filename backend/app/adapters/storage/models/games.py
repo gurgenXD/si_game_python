@@ -8,6 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.adapters.storage.database.base_model import BaseModel
 from app.services.types.game_status import GameStatusType
 
+
 if TYPE_CHECKING:
     from app.adapters.storage.models.packages import PackageModel
     from app.adapters.storage.models.users import UserModel

@@ -5,6 +5,7 @@ from fastapi import APIRouter, status
 from app.container import CONTAINER
 from app.services.schemas.package import PackageCreateSchema, PackageSchema
 
+
 router = APIRouter(prefix="/packages", tags=["PACKAGES"])
 
 
@@ -23,6 +24,6 @@ async def get_package_by_uuid(uuid: UUID) -> PackageSchema:
 
 
 @router.get("", summary="Get packags")
-async def get_packages(uuid: UUID) -> list[PackageSchema]:
+async def get_packages(uuid: UUID) -> list[PackageSchema]:  # noqa: ARG001
     """Get packages."""
     return []

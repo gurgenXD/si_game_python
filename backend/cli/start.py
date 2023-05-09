@@ -11,6 +11,5 @@ def start() -> None:
 
 @start.command()
 def api() -> None:
-    """API service."""
-
+    """Run API service."""
     uvicorn.run(**CONTAINER.server_settings().dict())

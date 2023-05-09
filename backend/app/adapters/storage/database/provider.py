@@ -1,5 +1,5 @@
+from collections.abc import Callable
 from contextlib import AbstractContextManager, asynccontextmanager
-from typing import Callable
 
 from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
@@ -12,10 +12,11 @@ class DatabaseProvider:
         self,
         db_url: str,
         db_schema: str,
-        echo: bool,
         pool_size: int,
         max_overflow: int,
         pool_timeout: int,
+        *,
+        echo: bool,
     ) -> None:
         self._engine = create_async_engine(
             url=db_url,

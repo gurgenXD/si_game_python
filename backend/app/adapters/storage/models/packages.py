@@ -7,6 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.adapters.storage.database.base_model import BaseModel
 
+
 if TYPE_CHECKING:
     from app.adapters.storage.models.games import GameModel
     from app.adapters.storage.models.rounds import RoundModel

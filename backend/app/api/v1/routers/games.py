@@ -6,6 +6,7 @@ from app.container import CONTAINER
 from app.services.schemas.game import GameCreateSchema, GameSchema
 from app.services.types.game_status import GameStatusType
 
+
 router = APIRouter(prefix="/games", tags=["GAMES"])
 
 
@@ -24,9 +25,7 @@ async def get_games(
 ) -> list[GameSchema]:
     """Get games."""
     service = CONTAINER.game_service()
-    games = await service.get_all(
-        status=status, presenter_uuid=presenter_uuid, package_uuid=package_uuid
-    )
+    await service.get_all(status=status, presenter_uuid=presenter_uuid, package_uuid=package_uuid)
 
     return []
 

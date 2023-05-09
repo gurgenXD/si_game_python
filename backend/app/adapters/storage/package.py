@@ -1,5 +1,6 @@
+from collections.abc import Callable
 from contextlib import AbstractAsyncContextManager
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING
 from uuid import UUID
 
 from sqlalchemy import exc, select
@@ -8,6 +9,7 @@ from sqlalchemy.orm import joinedload
 from app.adapters.storage.models import PackageModel, QuestionModel, RoundModel, TopicModel
 from app.services.exceptions import NotFoundError
 from app.services.schemas.package import PackageSchema
+
 
 if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession
@@ -39,7 +41,7 @@ class PackageAdapter:
                 round_model = RoundModel(
                     uuid=round_.uuid,
                     order=round_.order,
-                    type=round_.type,
+                    type_=round_.type_,
                     package_uuid=package.uuid,
                 )
                 session.add(round_model)
@@ -56,7 +58,7 @@ class PackageAdapter:
                             text=question.text,
                             answer=question.answer,
                             cost=question.cost,
-                            type=question.type,
+                            type_=question.type_,
                             file_path=question.file_path,
                             topic_uuid=topic.uuid,
                         )
@@ -65,7 +67,8 @@ class PackageAdapter:
             try:
                 await session.commit()
             except exc.IntegrityError as ex:
-                raise NotFoundError("Object not found.") from ex
+                msg = "Object not found."
+                raise NotFoundError(msg) from ex
 
     async def get(self, uuid: UUID) -> "PackageSchema":
         """Get packaga."""
@@ -73,11 +76,9 @@ class PackageAdapter:
             select(PackageModel)
             .where(PackageModel.uuid == uuid)
             .options(
-                (
-                    joinedload(PackageModel.rounds)
-                    .joinedload(RoundModel.topics)
-                    .joinedload(TopicModel.questions)
-                )
+                joinedload(PackageModel.rounds)
+                .joinedload(RoundModel.topics)
+                .joinedload(TopicModel.questions)
             )
         )
 
@@ -85,7 +86,8 @@ class PackageAdapter:
             package_model = (await session.execute(query)).unique().scalar()
 
             if not package_model:
-                raise NotFoundError("Object not found.")
+                msg = "Object not found."
+                raise NotFoundError(msg)
 
             package = PackageSchema.from_orm(package_model)
 

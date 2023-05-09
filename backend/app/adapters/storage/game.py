@@ -1,5 +1,6 @@
+from collections.abc import Callable
 from contextlib import AbstractAsyncContextManager
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING
 from uuid import UUID
 
 from sqlalchemy import exc, select
@@ -9,6 +10,7 @@ from app.adapters.storage.models import GameModel, PackageModel, RoundModel, Top
 from app.services.exceptions import NotFoundError
 from app.services.schemas.game import GameSchema
 from app.services.types.game_status import GameStatusType
+
 
 if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession
@@ -29,6 +31,7 @@ class GameAdapter:
         package_uuid: UUID,
         capacity: int,
         status: GameStatusType,
+        *,
         is_deleted: bool,
     ) -> None:
         """Create new game."""
@@ -47,11 +50,12 @@ class GameAdapter:
             try:
                 await session.commit()
             except exc.IntegrityError as ex:
-                raise NotFoundError("Object not found.") from ex
+                msg = "Object not found."
+                raise NotFoundError(msg) from ex
 
     async def get_all(
         self, status: GameStatusType | None, presenter_uuid: UUID | None, package_uuid: UUID | None
-    ) -> list[dict]:
+    ) -> list["GameSchema"]:
         """Get games."""
         query = select(GameModel)
 
@@ -65,10 +69,7 @@ class GameAdapter:
             query = query.where(GameModel.package_uuid == package_uuid)
 
         async with self._session_factory() as session:
-            games = (await session.execute(query)).all()
-
-            print(games)
-
+            (await session.execute(query)).all()
             await session.commit()
 
     async def get(self, uuid: UUID) -> "GameSchema":
@@ -91,7 +92,8 @@ class GameAdapter:
             game_model = (await session.execute(query)).unique().scalar()
 
             if not game_model:
-                raise NotFoundError("Object not found.")
+                msg = "Object not found."
+                raise NotFoundError(msg)
 
             game = GameSchema.from_orm(game_model)
 

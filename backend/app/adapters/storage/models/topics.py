@@ -6,6 +6,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.adapters.storage.database.base_model import BaseModel
 
+
 if TYPE_CHECKING:
     from app.adapters.storage.models.questions import QuestionModel
     from app.adapters.storage.models.rounds import RoundModel
@@ -20,5 +21,5 @@ class TopicModel(BaseModel):
 
     round_uuid: Mapped[UUID] = mapped_column(sa.Uuid, sa.ForeignKey("rounds.uuid"))
 
-    round: Mapped["RoundModel"] = relationship("RoundModel", back_populates="topics")
+    round_: Mapped["RoundModel"] = relationship("RoundModel", back_populates="topics")
     questions: Mapped[list["QuestionModel"]] = relationship("QuestionModel", back_populates="topic")

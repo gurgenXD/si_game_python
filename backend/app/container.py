@@ -3,7 +3,6 @@ from dependency_injector.providers import Singleton
 
 from app.adapters.storage.database.provider import DatabaseProvider
 from app.adapters.storage.game import GameAdapter
-from app.adapters.storage.models import packages
 from app.adapters.storage.package import PackageAdapter
 from app.services.game import GameService
 from app.services.package import PackageService

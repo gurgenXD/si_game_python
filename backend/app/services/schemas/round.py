@@ -10,7 +10,7 @@ class RoundSchema(BaseModel):
 
     uuid: UUID
     order: int
-    type: str
+    type_: str
 
     topics: list[TopicSchema]
 
@@ -21,6 +21,6 @@ class RoundSchema(BaseModel):
 class RoundCreateSchema(BaseModel):
     """Round create schema."""
 
-    type: str
+    type_: str
 
     topics: list[TopicCreateSchema]

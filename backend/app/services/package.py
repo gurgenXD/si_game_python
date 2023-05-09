@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+import datetime
 from typing import TYPE_CHECKING
 from uuid import UUID, uuid4
 
@@ -6,6 +6,7 @@ from app.services.schemas.package import PackageSchema
 from app.services.schemas.question import QuestionSchema
 from app.services.schemas.round import RoundSchema
 from app.services.schemas.topic import TopicSchema
+
 
 if TYPE_CHECKING:
     from app.adapters.storage.package import PackageAdapter
@@ -27,12 +28,12 @@ class PackageService:
             difficult=0,
             rating=0,
             counter=0,
-            created_at=datetime.now(tz=timezone.utc),
+            created_at=datetime.UTC,
             rounds=[
                 RoundSchema(
                     uuid=uuid4(),
                     order=index,
-                    type=round_.type,
+                    type_=round_.type_,
                     topics=[
                         TopicSchema(
                             uuid=uuid4(),
@@ -43,7 +44,7 @@ class PackageService:
                                     text=question.text,
                                     answer=question.answer,
                                     cost=question.cost,
-                                    type=question.type,
+                                    type_=question.type_,
                                     file_path=question.file_path,
                                 )
                                 for question in topic.questions

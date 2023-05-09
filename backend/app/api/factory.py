@@ -5,9 +5,8 @@ from app.api.v1 import factory as v1_factory
 from app.container import CONTAINER
 
 
-def create_app():
+def create_app() -> "FastAPI":
     """Create FastAPI application."""
-
     settings = CONTAINER.api_settings()
 
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)

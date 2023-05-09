@@ -3,6 +3,7 @@ from uuid import UUID, uuid4
 
 from app.services.types.game_status import GameStatusType
 
+
 if TYPE_CHECKING:
     from app.adapters.storage.game import GameAdapter
     from app.services.schemas.game import GameCreateSchema, GameSchema

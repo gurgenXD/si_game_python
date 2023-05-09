@@ -10,7 +10,7 @@ class QuestionSchema(BaseModel):
     text: str
     answer: str
     cost: int
-    type: str
+    type_: str
     file_path: str | None
 
     class Config:
@@ -23,5 +23,5 @@ class QuestionCreateSchema(BaseModel):
     text: str
     answer: str
     cost: int
-    type: str
+    type_: str
     file_path: str | None
