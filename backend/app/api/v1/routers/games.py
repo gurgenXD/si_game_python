@@ -1,12 +1,9 @@
-from unittest.mock import MagicMock
-from uuid import UUID, uuid4
+from uuid import UUID
 
 from fastapi import APIRouter, status
 
 from app.container import CONTAINER
 from app.services.schemas.game import GameCreateSchema, GameSchema
-from app.services.schemas.package import PackageSchema
-from app.services.schemas.user import UserSchema
 from app.services.types.game_status import GameStatusType
 
 router = APIRouter(prefix="/games", tags=["GAMES"])
@@ -31,18 +28,7 @@ async def get_games(
         status=status, presenter_uuid=presenter_uuid, package_uuid=package_uuid
     )
 
-    return [
-        GameSchema(
-            uuid=uuid4(),
-            capacity=3,
-            status=GameStatusType.FINISHED,
-            is_deleted=False,
-            package=MagicMock(PackageSchema),
-            presenter=MagicMock(UserSchema),
-            players=[],
-            viewers=[],
-        )
-    ]
+    return []
 
 
 @router.get("/{uuid}", summary="Get game by UUID")

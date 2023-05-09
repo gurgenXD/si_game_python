@@ -20,3 +20,9 @@ async def get_package_by_uuid(uuid: UUID) -> PackageSchema:
     """Get package by UUID."""
     service = CONTAINER.package_service()
     return await service.get(uuid=uuid)
+
+
+@router.get("", summary="Get packags")
+async def get_packages(uuid: UUID) -> list[PackageSchema]:
+    """Get packages."""
+    return []
