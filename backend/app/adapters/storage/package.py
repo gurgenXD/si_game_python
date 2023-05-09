@@ -1,7 +1,12 @@
 from contextlib import AbstractAsyncContextManager
 from typing import TYPE_CHECKING, Callable
+from uuid import UUID
+
+from sqlalchemy import exc, select
+from sqlalchemy.orm import joinedload
 
 from app.adapters.storage.models import PackageModel, QuestionModel, RoundModel, TopicModel
+from app.services.exceptions import NotFoundError
 from app.services.schemas.package import PackageSchema
 
 if TYPE_CHECKING:
@@ -57,4 +62,33 @@ class PackageAdapter:
                         )
                         session.add(question_model)
 
+            try:
+                await session.commit()
+            except exc.IntegrityError as ex:
+                raise NotFoundError("Object not found.") from ex
+
+    async def get(self, uuid: UUID) -> "PackageSchema":
+        """Get packaga."""
+        query = (
+            select(PackageModel)
+            .where(PackageModel.uuid == uuid)
+            .options(
+                (
+                    joinedload(PackageModel.rounds)
+                    .joinedload(RoundModel.topics)
+                    .joinedload(TopicModel.questions)
+                )
+            )
+        )
+
+        async with self._session_factory() as session:
+            package_model = (await session.execute(query)).unique().scalar()
+
+            if not package_model:
+                raise NotFoundError("Object not found.")
+
+            package = PackageSchema.from_orm(package_model)
+
             await session.commit()
+
+        return package

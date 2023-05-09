@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from app.services.schemas.package import PackageSchema
 from app.services.schemas.question import QuestionSchema
@@ -57,3 +57,7 @@ class PackageService:
         )
 
         await self._packages.create(package=package_creation)
+
+    async def get(self, uuid: UUID) -> "PackageSchema":
+        """Get package."""
+        return await self._packages.get(uuid=uuid)

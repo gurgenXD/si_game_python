@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 from uuid import UUID, uuid4
 
-from fastapi import APIRouter
+from fastapi import APIRouter, status
 
 from app.container import CONTAINER
 from app.services.schemas.game import GameCreateSchema, GameSchema
@@ -12,7 +12,7 @@ from app.services.types.game_status import GameStatusType
 router = APIRouter(prefix="/games", tags=["GAMES"])
 
 
-@router.post("", summary="Create game")
+@router.post("", summary="Create game", status_code=status.HTTP_201_CREATED)
 async def create_game(game: GameCreateSchema) -> None:
     """Create game."""
     service = CONTAINER.game_service()
